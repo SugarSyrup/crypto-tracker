@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Switch, Route, Link, useLocation, useParams, useRouteMatch } from "react-router-dom";
 import styled from 'styled-components';
 import { useQuery } from "react-query";
@@ -179,8 +179,13 @@ function Coin() {
 
   return (
   <Container>
+    {/* <Helmet>
+      <title>
+        {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+      </title>
+    </Helmet> */}
     <Header>
-      <Link to="/">
+      <Link to="/crypto-tracker">
         <Back>&larr;</Back>
       </Link>
       <Title>
@@ -201,8 +206,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -218,17 +223,17 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/crypto-tracker/${coinId}/chart`}>Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`/crypto-tracker/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
           <Switch>
-            <Route path={`/:coinId/price`}>
+            <Route path={`/crypto-tracker/:coinId/price`}>
               <Price />
             </Route>
-            <Route path={`/:coinId/chart`}>
+            <Route path={`/crypto-tracker/:coinId/chart`}>
               <Chart coinId={coinId}/>
             </Route>
           </Switch>

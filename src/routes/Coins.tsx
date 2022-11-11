@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "react-query";
+import { Helmet } from "react-helmet";
 
 import { fetchCoins } from "../api";
 
@@ -93,15 +94,21 @@ function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
+      {/* <Helmet>
+        <title>
+          Coins
+        </title>
+      </Helmet> */}
+    
       <Header>
-        <Title>코인</Title>
+        <Title>Coins</Title>
       </Header>
       {isLoading? ( <Loader>Loading...</Loader> ) 
       : ( <CoinsList>
       {data?.slice(0,100).map((coin) => (
         <Coin key={coin.id}>
           <Link to={{
-            pathname: `/${coin.id}`,
+            pathname: `/crypto-tracker/${coin.id}`,
             state: {name:coin.name},
             }}>
             <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} />
