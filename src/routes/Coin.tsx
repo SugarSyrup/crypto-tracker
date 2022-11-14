@@ -150,7 +150,11 @@ interface PriceData {
   };
 }
 
-function Coin() {
+interface ICoinProps {
+  isDark: boolean;
+}
+
+function Coin({isDark}:ICoinProps) {
   // const [loading, setLoading] = useState<boolean>(true);
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
@@ -179,13 +183,13 @@ function Coin() {
 
   return (
   <Container>
-    {/* <Helmet>
+    <Helmet>
       <title>
         {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
       </title>
-    </Helmet> */}
+    </Helmet>
     <Header>
-      <Link to="/crypto-tracker">
+      <Link to="/">
         <Back>&larr;</Back>
       </Link>
       <Title>
@@ -223,18 +227,18 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/crypto-tracker/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/crypto-tracker/${coinId}/price`}>Price</Link>
+              <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
           <Switch>
-            <Route path={`/crypto-tracker/:coinId/price`}>
+            <Route path={`/:coinId/price`}>
               <Price />
             </Route>
-            <Route path={`/crypto-tracker/:coinId/chart`}>
-              <Chart coinId={coinId}/>
+            <Route path={`/:coinId/chart`}>
+              <Chart isDark={isDark} coinId={coinId}/>
             </Route>
           </Switch>
         </>

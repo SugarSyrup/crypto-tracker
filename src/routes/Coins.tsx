@@ -23,7 +23,7 @@ const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
@@ -77,7 +77,11 @@ interface ICoin {
 }
 
 
-function Coins() {
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({toggleDark}:ICoinsProps) {
     // const [coins, setCoins] = useState<CoinInterface[]>([]);
     // const [loading, setLoading] = useState<boolean>(true);
     // useEffect(()=>{
@@ -94,21 +98,22 @@ function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
-      {/* <Helmet>
+      <Helmet>
         <title>
           Coins
         </title>
-      </Helmet> */}
+      </Helmet>
     
       <Header>
         <Title>Coins</Title>
+        <button onClick={toggleDark}></button>
       </Header>
       {isLoading? ( <Loader>Loading...</Loader> ) 
       : ( <CoinsList>
       {data?.slice(0,100).map((coin) => (
         <Coin key={coin.id}>
           <Link to={{
-            pathname: `/crypto-tracker/${coin.id}`,
+            pathname: `/${coin.id}`,
             state: {name:coin.name},
             }}>
             <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} />
