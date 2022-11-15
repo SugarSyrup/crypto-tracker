@@ -78,10 +78,9 @@ interface ICoin {
 
 
 interface ICoinsProps {
-  toggleDark: () => void;
 }
 
-function Coins({toggleDark}:ICoinsProps) {
+function Coins() {
     // const [coins, setCoins] = useState<CoinInterface[]>([]);
     // const [loading, setLoading] = useState<boolean>(true);
     // useEffect(()=>{
@@ -106,7 +105,6 @@ function Coins({toggleDark}:ICoinsProps) {
     
       <Header>
         <Title>Coins</Title>
-        <button onClick={toggleDark}></button>
       </Header>
       {isLoading? ( <Loader>Loading...</Loader> ) 
       : ( <CoinsList>
