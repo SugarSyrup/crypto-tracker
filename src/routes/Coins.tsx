@@ -5,6 +5,8 @@ import { useQuery } from "react-query";
 import { Helmet } from "react-helmet";
 
 import { fetchCoins } from "../api";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "../atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -95,6 +97,7 @@ function Coins() {
     // use react-query : 더 효과적이고 간단한 코드를 위해
 
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const setterFn = useSetRecoilState(isDarkAtom);
   return (
     <Container>
       <Helmet>
@@ -105,6 +108,7 @@ function Coins() {
     
       <Header>
         <Title>Coins</Title>
+        <button onClick={() => setterFn(prev => !prev)}>💜</button>
       </Header>
       {isLoading? ( <Loader>Loading...</Loader> ) 
       : ( <CoinsList>
